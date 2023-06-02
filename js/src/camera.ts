@@ -40,7 +40,7 @@ export class Camera {
 
         let stream = null;
         if (['user', 'environment'].includes(this.mode)) {
-            let capabilities = {
+            /*let capabilities = {
                 ...defaultCapabilities,
                 video: {
                     ...(<MediaTrackConstraints>defaultCapabilities.video),
@@ -49,7 +49,20 @@ export class Camera {
                 audio: false,
             };
 
+            stream = await navigator.mediaDevices.getUserMedia(capabilities);*/
+            
+            let capabilities = {
+                ...defaultCapabilities,
+                video: {
+                    ...(<MediaTrackConstraints>defaultCapabilities.video),
+                    facingMode: { exact: 'environment' }, // or 'user' for the opposite camera
+                    deviceId: { exact: '/dev/video0' },
+                },
+                audio: false,
+            };
+
             stream = await navigator.mediaDevices.getUserMedia(capabilities);
+
         } else {
             let capabilities = {
                 ...defaultCapabilities,
